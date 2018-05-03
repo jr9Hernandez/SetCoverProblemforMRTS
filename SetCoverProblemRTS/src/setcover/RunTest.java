@@ -13,7 +13,7 @@ public class RunTest {
 		setCover.dataRecollection();
 		
 		
-		//Here we collect the data
+		//Here we sample
 		
 		File[] files = new File("logs_states").listFiles();
 	    sampling(files);

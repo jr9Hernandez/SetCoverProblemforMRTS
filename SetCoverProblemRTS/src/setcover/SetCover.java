@@ -9,6 +9,13 @@ import ai.asymmetric.GAB.PGSLimitScriptC;
 import ai.configurablescript.BasicExpandedConfigurableScript;
 import ai.configurablescript.ScriptsCreator;
 import ai.core.AI;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -24,29 +31,26 @@ public class SetCover {
 
 	int scriptLeader=-1;
 	int scriptEnemy=-1;
+	Random rand;
+	int sampleCounter=0;
+	
 	public SetCover() {
-
+		rand = new Random();
 	}
 
 	public void dataRecollection() {
 		GameSampling game = new GameSampling();
-		UnitTypeTable utt = new UnitTypeTable();
 		for(int i=0;i<ConfigurationsSC.NUM_SAM;i++)
 		{
-			for(int j=0;j<ConfigurationsSC.NUM_SCRIPTS_SAM;i++)
-			{
-
-				Random rand = new Random();
+			scriptEnemy = rand.nextInt(4);
+			
+			for(int j=0;j<ConfigurationsSC.NUM_SCRIPTS_SAM;j++)
+			{				
 				int scriptLeader = rand.nextInt(300);
-				
-				for(int k=0;k<ConfigurationsSC.NUM_ENENMY_SC_SAM;k++)
-				{
-					scriptEnemy = rand.nextInt(300);
-				}
 
-				try {
-					
-					game.run(scriptLeader,scriptEnemy);
+				try {						
+					game.run(sampleCounter,scriptLeader,scriptEnemy);
+					sampleCounter++;
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -57,28 +61,44 @@ public class SetCover {
 
 	}
 	
-	public void sampling(String folderStates, int numFiles)
+	public void sampling(String folderLeader, int numFiles)
 	{
-		GameSampling game = new GameSampling();
+		
 		int numberStatesSampled=ConfigurationsSC.NUM_STATES_SAM;
 		int stateForSampling=0;
 		
 		ArrayList<String> statesforSampling = new ArrayList<>();
 		for (int i=0;i<numberStatesSampled;i++)
 		{
-			statesforSampling.add(folderStates+"/"+stateForSampling+".txt");
-			stateForSampling=stateForSampling+(numFiles/numberStatesSampled);
-		}
-		for (String state : statesforSampling) {
-			for (int i = 0; i < ConfigurationsSC.TOTAL_SCRIPTS; i++) {
+		
+			try {
+				statesforSampling.add(readFile("logs_states/"+folderLeader+"/"+"state_"+stateForSampling+".txt"));
+				stateForSampling=stateForSampling+(numFiles/numberStatesSampled);
+				File dir = new File("samplings/"+folderLeader+"/"+"state_"+stateForSampling);
+			    dir.mkdirs();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}			
+	        
+			for (int j = 0; j < ConfigurationsSC.TOTAL_SCRIPTS; j++) {
 //				AI ai = new PGSLimitScriptC(utt, decodeScripts(utt, String.valueOf(i).concat(";"))); // carregamos o script que desejamos simular
 				UnitTypeTable utt = new UnitTypeTable();
-				GameState gsSimulator = GameState.fromJSON(state,utt);
-				game.generateActionbyScript(gsSimulator, i);
-				//método que simule a ação e log a ação do script i para o estamo carregado....
-	            
-	            
+//				System.out.println("state "+statesforSampling.get(i));
+				GameState gsSimulator = GameState.fromJSON(statesforSampling.get(i),utt);
+				GameSampling game = new GameSampling();
+				PlayerAction pa= game.generateActionbyScript(gsSimulator, j);
+                try {
+                	Writer writer = new FileWriter("samplings/"+folderLeader+"/"+"state_"+stateForSampling+"/script_"+j+".txt");
+					writer.write(pa.toString());
+					writer.flush();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				System.gc(); // forço o garbage para tentar liberar memoria....
+				
+				
 			}
 
 		}		
@@ -106,6 +126,23 @@ public class SetCover {
 		});
 
 		return scriptsAI;
+	}
+	
+	String readFile(String fileName) throws IOException {
+	    BufferedReader br = new BufferedReader(new FileReader(fileName));
+	    try {
+	        StringBuilder sb = new StringBuilder();
+	        String line = br.readLine();
+
+	        while (line != null) {
+	            sb.append(line);
+	            sb.append("\n");
+	            line = br.readLine();
+	        }
+	        return sb.toString();
+	    } finally {
+	        br.close();
+	    }
 	}
 
 }

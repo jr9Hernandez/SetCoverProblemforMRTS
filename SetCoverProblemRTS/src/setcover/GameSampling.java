@@ -79,33 +79,27 @@ public class GameSampling {
     
     public GameSampling()
     {
-    	UnitTypeTable utt = new UnitTypeTable();
-        MAXCYCLES = 8000;
+    	utt = new UnitTypeTable();
+        MAXCYCLES = 2000;
         PERIOD = 20;
-        try {
-			pgs = PhysicalGameState.load("maps/8x8/basesWorkers8x8A.xml", utt);
-	        //pgs = PhysicalGameState.load("maps/16x16/basesWorkers16x16A.xml", utt);        
-	        //pgs = PhysicalGameState.load("maps/BWDistantResources32x32.xml", utt);
-	        //pgs = PhysicalGameState.load("maps/32x32/basesWorkers32x32A.xml", utt);
-	        //pgs = PhysicalGameState.load("maps/24x24/basesWorkers24x24A.xml", utt);
-	        //pgs = PhysicalGameState.load("maps/BroodWar/(4)BloodBath.scmB.xml", utt);
-			
-		} catch (JDOMException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
     }
 
-    public void run(int idScriptLeader, int idScriptEnemy) throws Exception {
+    public void run(int sampleCounter, int idScriptLeader, int idScriptEnemy) throws Exception {
 
-    
+		pgs = PhysicalGameState.load("maps/8x8/basesWorkers8x8A.xml", utt);
+        //pgs = PhysicalGameState.load("maps/16x16/basesWorkers16x16A.xml", utt);        
+        //pgs = PhysicalGameState.load("maps/BWDistantResources32x32.xml", utt);
+        //pgs = PhysicalGameState.load("maps/32x32/basesWorkers32x32A.xml", utt);
+        //pgs = PhysicalGameState.load("maps/24x24/basesWorkers24x24A.xml", utt);
+        //pgs = PhysicalGameState.load("maps/BroodWar/(4)BloodBath.scmB.xml", utt);  
 
         GameState gs = new GameState(pgs, utt);
         boolean gameover = false;
 
        
-
+        System.out.println("idscriptleader "+idScriptLeader);
+        System.out.println("idscripEnemy "+idScriptEnemy);
         AI ai1 = new PGSSCriptChoice(utt, decodeScripts(utt, String.valueOf(idScriptLeader).concat(";")), "--");
         AI ai2 = new PGSSCriptChoice(utt, decodeScripts(utt, String.valueOf(idScriptEnemy).concat(";")), "--");
 
@@ -115,19 +109,22 @@ public class GameSampling {
         System.out.println("AI 2 = "+ai2.toString()+"\n");        
         
         
-        JFrame w = PhysicalGameStatePanel.newVisualizer(gs, 640, 640, false, PhysicalGameStatePanel.COLORSCHEME_BLACK);
+        //JFrame w = PhysicalGameStatePanel.newVisualizer(gs, 640, 640, false, PhysicalGameStatePanel.COLORSCHEME_BLACK);
 
         long startTime = System.currentTimeMillis();
         long nextTimeToUpdate = System.currentTimeMillis() + PERIOD;
         
-        File dir = new File("states/log_"+idScriptLeader+"_"+idScriptEnemy);
+        File dir = new File("logs_states/log_"+sampleCounter+"_"+idScriptLeader+"_"+idScriptEnemy);
         dir.mkdir();
         
         do {
             if (System.currentTimeMillis() >= nextTimeToUpdate) {
+            	
+            	//File subDir = new File("logs_states/log_"+sampleCounter+"_"+idScriptLeader+"_"+idScriptEnemy+"/"+"state_"+gs.getTime());
+            	//subDir.mkdir();
                 
                 //alcançamos o estado que desejamos salvar....
-            	Writer writer = new FileWriter("states/log_"+idScriptLeader+"_"+idScriptEnemy+"/"+gs.getTime()+".txt");
+            	Writer writer = new FileWriter("logs_states/log_"+sampleCounter+"_"+idScriptLeader+"_"+idScriptEnemy+"/"+"state_"+gs.getTime()+".txt");
                 gs.toJSON(writer); //salva JSon contendo todo o estado no tempo x que escolhido
                 writer.flush();
                 
@@ -146,7 +143,7 @@ public class GameSampling {
                 
                 // simulate:
                 gameover = gs.cycle();
-                w.repaint();
+                //w.repaint();
                 nextTimeToUpdate += PERIOD;
             } else {
                 try {
@@ -179,7 +176,7 @@ public class GameSampling {
         PlayerAction pa1=null;
 		try {
 			pa1 = ai1.getAction(0, g);
-			System.out.println("Action A1 ="+ pa1.toString());
+			//System.out.println("Action A1 ="+ pa1.toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

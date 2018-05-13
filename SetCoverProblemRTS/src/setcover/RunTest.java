@@ -17,6 +17,8 @@ public class RunTest {
 		
 		File[] files = new File("logs_states").listFiles();
 	    sampling(files);
+	    
+	    System.out.println("Fim");
 		
 		
 	}

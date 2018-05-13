@@ -85,7 +85,7 @@ public class GameSampling {
 
     }
 
-    public void run(int sampleCounter, int idScriptLeader, int idScriptEnemy) throws Exception {
+    public void run(int idScriptLeader, int idScriptEnemy) throws Exception {
 
 		pgs = PhysicalGameState.load("maps/8x8/basesWorkers8x8A.xml", utt);
         //pgs = PhysicalGameState.load("maps/16x16/basesWorkers16x16A.xml", utt);        
@@ -114,19 +114,25 @@ public class GameSampling {
         long startTime = System.currentTimeMillis();
         long nextTimeToUpdate = System.currentTimeMillis() + PERIOD;
         
-        File dir = new File("logs_states/log_"+sampleCounter+"_"+idScriptLeader+"_"+idScriptEnemy);
+        File[] files = new File("logs_states").listFiles();
+        int idSampling=files.length;
+        File dir = new File("logs_states/log_"+idScriptLeader+"_"+idScriptEnemy+"_"+idSampling);
         dir.mkdir();
-        
+        int id=0;
         do {
             if (System.currentTimeMillis() >= nextTimeToUpdate) {
             	
             	//File subDir = new File("logs_states/log_"+sampleCounter+"_"+idScriptLeader+"_"+idScriptEnemy+"/"+"state_"+gs.getTime());
             	//subDir.mkdir();
                 
+            	if (gs.canExecuteAnyAction(0) ) {
                 //alcançamos o estado que desejamos salvar....
-            	Writer writer = new FileWriter("logs_states/log_"+sampleCounter+"_"+idScriptLeader+"_"+idScriptEnemy+"/"+"state_"+gs.getTime()+".txt");
-                gs.toJSON(writer); //salva JSon contendo todo o estado no tempo x que escolhido
-                writer.flush();
+        
+            		Writer writer = new FileWriter("logs_states/log"+"_"+idScriptLeader+"_"+idScriptEnemy+"_"+idSampling+"/"+"state_"+id+".txt");
+            		gs.toJSON(writer); //salva JSon contendo todo o estado no tempo x que escolhido
+            		writer.flush();
+            		id++;
+            	}
                 
                 startTime = System.currentTimeMillis();
                 PlayerAction pa1 = ai1.getAction(0, gs);  

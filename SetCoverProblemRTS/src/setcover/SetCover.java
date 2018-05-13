@@ -33,13 +33,16 @@ public class SetCover {
 	int scriptEnemy=-1;
 	Random rand;
 	int sampleCounter=0;
+	GameSampling game;
+	UnitTypeTable utt;
 	
 	public SetCover() {
+		game = new GameSampling();
 		rand = new Random();
+		utt = new UnitTypeTable();
 	}
 
 	public void dataRecollection() {
-		GameSampling game = new GameSampling();
 		for(int i=0;i<ConfigurationsSC.NUM_SAM;i++)
 		{
 			scriptEnemy = rand.nextInt(4);
@@ -49,7 +52,7 @@ public class SetCover {
 				int scriptLeader = rand.nextInt(300);
 
 				try {						
-					game.run(sampleCounter,scriptLeader,scriptEnemy);
+					game.run(scriptLeader,scriptEnemy);
 					sampleCounter++;
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -74,23 +77,23 @@ public class SetCover {
 			try {
 				statesforSampling.add(readFile("logs_states/"+folderLeader+"/"+"state_"+stateForSampling+".txt"));
 				stateForSampling=stateForSampling+(numFiles/numberStatesSampled);
-				File dir = new File("samplings/"+folderLeader+"/"+"state_"+stateForSampling);
-			    dir.mkdirs();
+				//File dir = new File("samplings/"+folderLeader+"/"+"state_"+stateForSampling);
+			    //dir.mkdirs();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}			
 	        
 			for (int j = 0; j < ConfigurationsSC.TOTAL_SCRIPTS; j++) {
-//				AI ai = new PGSLimitScriptC(utt, decodeScripts(utt, String.valueOf(i).concat(";"))); // carregamos o script que desejamos simular
-				UnitTypeTable utt = new UnitTypeTable();
-//				System.out.println("state "+statesforSampling.get(i));
+				
+				
 				GameState gsSimulator = GameState.fromJSON(statesforSampling.get(i),utt);
-				GameSampling game = new GameSampling();
+				
 				PlayerAction pa= game.generateActionbyScript(gsSimulator, j);
                 try {
-                	Writer writer = new FileWriter("samplings/"+folderLeader+"/"+"state_"+stateForSampling+"/script_"+j+".txt");
+                	Writer writer = new FileWriter("samplings/"+folderLeader+"_"+"state_"+stateForSampling+".txt",true);
 					writer.write(pa.toString());
+					writer.write("\n");
 					writer.flush();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

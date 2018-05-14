@@ -116,7 +116,8 @@ public class GameSampling {
         
         File[] files = new File("logs_states").listFiles();
         int idSampling=files.length;
-        File dir = new File("logs_states/log_"+idScriptLeader+"_"+idScriptEnemy+"_"+idSampling);
+        //File dir = new File("logs_states/log_"+idScriptLeader+"_"+idScriptEnemy+"_"+idSampling);
+        File dir = new File("logs_states/log_"+idScriptLeader+"_"+idScriptEnemy);
         dir.mkdir();
         int id=0;
         do {
@@ -128,7 +129,7 @@ public class GameSampling {
             	if (gs.canExecuteAnyAction(0) ) {
                 //alcançamos o estado que desejamos salvar....
         
-            		Writer writer = new FileWriter("logs_states/log"+"_"+idScriptLeader+"_"+idScriptEnemy+"_"+idSampling+"/"+"state_"+id+".txt");
+            		Writer writer = new FileWriter("logs_states/log"+"_"+idScriptLeader+"_"+idScriptEnemy+"/"+"state_"+id+".txt");
             		gs.toJSON(writer); //salva JSon contendo todo o estado no tempo x que escolhido
             		writer.flush();
             		id++;

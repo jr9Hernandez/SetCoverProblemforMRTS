@@ -1,16 +1,16 @@
-package setcover;
+package sampling;
 
 import java.io.File;
 
 public class RunTest {
 	
-	static SetCover setCover;
+	static DataRecollection dataRecollection;
 	
 	public static void main(String[] args) {
 		
 		//Here we collect the data
-		setCover=new SetCover();
-		setCover.dataRecollection();
+		dataRecollection=new DataRecollection();
+		dataRecollection.dataRecollection();
 		
 		
 		//Here we sample
@@ -27,7 +27,7 @@ public class RunTest {
 	    for (File file : files) {
 	            //System.out.println("Directory: " + file.getName());
 	            //sampling(file.listFiles()); // Calls same method again.
-	        	setCover.sampling(file.getName(), file.listFiles().length);
+	        	dataRecollection.sampling(file.getName(), file.listFiles().length);
 
 	    }
 	}

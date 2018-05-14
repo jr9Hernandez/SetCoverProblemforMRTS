@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package setcover;
+package sampling;
 
 import ai.asymmetric.GAB.PGSLimitScriptC;
 import ai.configurablescript.BasicExpandedConfigurableScript;
@@ -27,7 +27,7 @@ import rts.units.UnitTypeTable;
  *
  * @author rubens
  */
-public class SetCover {
+public class DataRecollection {
 
 	int scriptLeader=-1;
 	int scriptEnemy=-1;
@@ -36,7 +36,7 @@ public class SetCover {
 	GameSampling game;
 	UnitTypeTable utt;
 	
-	public SetCover() {
+	public DataRecollection() {
 		game = new GameSampling();
 		rand = new Random();
 		utt = new UnitTypeTable();
@@ -92,7 +92,7 @@ public class SetCover {
 				PlayerAction pa= game.generateActionbyScript(gsSimulator, j);
                 try {
                 	Writer writer = new FileWriter("samplings/"+folderLeader+"_"+"state_"+stateForSampling+".txt",true);
-					writer.write(pa.toString());
+					writer.write(pa.getActions().toString());
 					writer.write("\n");
 					writer.flush();
 				} catch (IOException e) {

@@ -45,7 +45,7 @@ public class DataRecollection {
 	public void dataRecollection() {
 		for(int i=0;i<ConfigurationsSC.NUM_SAM;i++)
 		{
-			scriptEnemy = rand.nextInt(4);
+			scriptEnemy = rand.nextInt(ConfigurationsSC.TOTAL_SCRIPTS);
 			
 			for(int j=0;j<ConfigurationsSC.NUM_SCRIPTS_SAM;j++)
 			{				

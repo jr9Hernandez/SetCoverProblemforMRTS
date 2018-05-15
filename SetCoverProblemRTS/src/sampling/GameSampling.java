@@ -88,6 +88,10 @@ public class GameSampling {
     }
 
     public void run(int idScriptLeader, int idScriptEnemy) throws Exception {
+    	
+    	//controle de tempo
+        Instant timeInicial = Instant.now();
+        Duration duracao;
 
 		//pgs = PhysicalGameState.load("maps/8x8/basesWorkers8x8A.xml", utt);
         //pgs = PhysicalGameState.load("maps/16x16/basesWorkers16x16A.xml", utt);        
@@ -111,10 +115,7 @@ public class GameSampling {
         System.out.println("AI 2 = "+ai2.toString()+"\n");        
         
         
-        //JFrame w = PhysicalGameStatePanel.newVisualizer(gs, 640, 640, false, PhysicalGameStatePanel.COLORSCHEME_BLACK);
-
-        long startTime = System.currentTimeMillis();
-        long nextTimeToUpdate = System.currentTimeMillis() + PERIOD;
+        //JFrame w = PhysicalGameStatePanel.newVisualizer(gs, 640, 640, false, PhysicalGameStatePanel.COLORSCHEME_BLACK);;
         
         File[] files = new File("logs_states").listFiles();
         int idSampling=files.length;
@@ -123,9 +124,8 @@ public class GameSampling {
         dir.mkdir();
         int id=0;
         
-        //controle de tempo
-        Instant timeInicial = Instant.now();
-        Duration duracao;
+        long nextTimeToUpdate = System.currentTimeMillis() + PERIOD;
+        
         do {
             if (System.currentTimeMillis() >= nextTimeToUpdate) {
             	
@@ -141,12 +141,10 @@ public class GameSampling {
             		id++;
             	}
                 
-                startTime = System.currentTimeMillis();
                 PlayerAction pa1 = ai1.getAction(0, gs);  
                 //System.out.println("Tempo de execução P1="+(startTime = System.currentTimeMillis() - startTime));
                 //System.out.println("Action A1 ="+ pa1.toString());
                 
-                startTime = System.currentTimeMillis();
                 PlayerAction pa2 = ai2.getAction(1, gs);
                 //System.out.println("Tempo de execução P2="+(startTime = System.currentTimeMillis() - startTime));
                 //System.out.println("Action A2 ="+ pa2.toString());

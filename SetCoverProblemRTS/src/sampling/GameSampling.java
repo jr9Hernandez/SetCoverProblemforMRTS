@@ -48,6 +48,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -120,6 +122,10 @@ public class GameSampling {
         File dir = new File("logs_states/log_"+idScriptLeader+"_"+idScriptEnemy);
         dir.mkdir();
         int id=0;
+        
+        //controle de tempo
+        Instant timeInicial = Instant.now();
+        Duration duracao;
         do {
             if (System.currentTimeMillis() >= nextTimeToUpdate) {
             	
@@ -171,7 +177,9 @@ public class GameSampling {
                 } 
             }
             */
-        } while (!gameover && gs.getTime() < MAXCYCLES);
+          //avaliacao de tempo
+            duracao = Duration.between(timeInicial, Instant.now());
+        } while (!gameover && (gs.getTime() < MAXCYCLES) && (duracao.toMinutes() < 15));
 
         System.out.println("Game Over");
     }

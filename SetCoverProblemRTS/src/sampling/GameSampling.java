@@ -82,7 +82,7 @@ public class GameSampling {
     public GameSampling()
     {
     	utt = new UnitTypeTable();
-        MAXCYCLES = 2000;
+        MAXCYCLES = 5000;
         PERIOD = 20;
 
     }

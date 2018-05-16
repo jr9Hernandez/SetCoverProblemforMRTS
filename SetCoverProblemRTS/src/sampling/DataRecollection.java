@@ -35,11 +35,13 @@ public class DataRecollection {
 	int sampleCounter=0;
 	GameSampling game;
 	UnitTypeTable utt;
+	String pathLog;
 	
-	public DataRecollection() {
+	public DataRecollection(String pathLog) {
 		game = new GameSampling();
 		rand = new Random();
 		utt = new UnitTypeTable();
+		this.pathLog=pathLog;
 	}
 
 	public void dataRecollection() {
@@ -52,7 +54,7 @@ public class DataRecollection {
 				scriptLeader = rand.nextInt(ConfigurationsSC.TOTAL_SCRIPTS);
 
 				try {						
-					game.run(scriptLeader,scriptEnemy);
+					game.run(scriptLeader,scriptEnemy,pathLog);
 					sampleCounter++;
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -75,7 +77,7 @@ public class DataRecollection {
 		{
 		
 			try {
-				statesforSampling.add(readFile("logs_states/"+folderLeader+"/"+"state_"+stateForSampling+".txt"));
+				statesforSampling.add(readFile("logs_states"+pathLog+"/"+folderLeader+"/"+"state_"+stateForSampling+".txt"));
 				stateForSampling=stateForSampling+(numFiles/numberStatesSampled);
 				//File dir = new File("samplings/"+folderLeader+"/"+"state_"+stateForSampling);
 			    //dir.mkdirs();
@@ -91,7 +93,7 @@ public class DataRecollection {
 				
 				PlayerAction pa= game.generateActionbyScript(gsSimulator, j);
                 try {
-                	Writer writer = new FileWriter("samplings/"+folderLeader+"_"+"state_"+stateForSampling+".txt",true);
+                	Writer writer = new FileWriter("samplings/"+folderLeader+"_idLogs_"+pathLog+"_state_"+stateForSampling+".txt",true);
 					writer.write(pa.getActions().toString());
 					writer.write("\n");
 					writer.flush();

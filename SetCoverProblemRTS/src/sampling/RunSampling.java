@@ -8,8 +8,9 @@ public class RunSampling {
 	
 	public static void main(String[] args) {
 		
+		String pathLog = args[1];
 		//Here we collect the data
-		dataRecollection=new DataRecollection();
+		dataRecollection=new DataRecollection(pathLog);
 		dataRecollection.dataRecollection();
 		
 		

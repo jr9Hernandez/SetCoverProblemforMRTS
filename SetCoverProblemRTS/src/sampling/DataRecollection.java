@@ -95,6 +95,7 @@ public class DataRecollection {
 					writer.write(pa.getActions().toString());
 					writer.write("\n");
 					writer.flush();
+					writer.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

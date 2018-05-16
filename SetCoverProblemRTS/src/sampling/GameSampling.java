@@ -138,6 +138,7 @@ public class GameSampling {
             		Writer writer = new FileWriter("logs_states/log"+"_"+idScriptLeader+"_"+idScriptEnemy+"/"+"state_"+id+".txt");
             		gs.toJSON(writer); //salva JSon contendo todo o estado no tempo x que escolhido
             		writer.flush();
+            		writer.close();
             		id++;
             	}
                 

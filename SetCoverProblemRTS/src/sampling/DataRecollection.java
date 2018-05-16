@@ -49,7 +49,7 @@ public class DataRecollection {
 			
 			for(int j=0;j<ConfigurationsSC.NUM_SCRIPTS_SAM;j++)
 			{				
-				int scriptLeader = rand.nextInt(ConfigurationsSC.TOTAL_SCRIPTS);
+				scriptLeader = rand.nextInt(ConfigurationsSC.TOTAL_SCRIPTS);
 
 				try {						
 					game.run(scriptLeader,scriptEnemy);

@@ -43,7 +43,7 @@ public class DataFormatting {
 	    	}
 	    }
 	    
-	  //Update the matrix with current actions
+	  //Update the matrix with current actions //CHECK ORDER IDS HERE!!!
 	    for(int i=0;i<data.size();i++)
 	    {
 	    	List<Integer> l= data.get(idsActions[i]);

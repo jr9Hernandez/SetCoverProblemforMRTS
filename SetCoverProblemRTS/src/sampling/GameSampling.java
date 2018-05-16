@@ -189,7 +189,7 @@ public class GameSampling {
         PlayerAction pa1=null;
 		try {
 			pa1 = ai1.getAction(0, g);
-			pa1.getActions().toString();
+			//pa1.getActions().toString();
 			//System.out.println(pa1.getActions());
 			//System.out.println("Action A1 ="+ pa1.toString());
 		} catch (Exception e) {

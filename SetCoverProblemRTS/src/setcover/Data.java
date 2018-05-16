@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import sampling.ConfigurationsSC;
+
 public class Data {
 	
 	HashMap<String, List<Integer>> data; 
@@ -35,7 +37,7 @@ public class Data {
 	    	try (BufferedReader br = new BufferedReader(new FileReader(files[i]))) {
 	    	    String line;
 	    	    int counterLine=0;
-	    	    while ((line = br.readLine()) != null && counterLine<300) {
+	    	    while ((line = br.readLine()) != null && counterLine<ConfigurationsSC.TOTAL_SCRIPTS) {
 	    	       // process the line.
 	    	    	Matcher m = Pattern.compile("\\<(.*?)\\>").matcher(line);
 	    	        while(m.find()) {

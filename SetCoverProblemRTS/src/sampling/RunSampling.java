@@ -16,7 +16,7 @@ public class RunSampling {
 		
 		//Here we sample
 		
-		File[] files = new File("logs_states"+pathLog).listFiles();
+		File[] files = new File("logs_states_"+pathLog).listFiles();
 	    sampling(files);
 	    
 	    System.out.println("Fim");

@@ -135,7 +135,7 @@ public class GameSampling {
             	if (gs.canExecuteAnyAction(0) ) {
                 //alcançamos o estado que desejamos salvar....
         
-            		Writer writer = new FileWriter("logs_states_"+pathLog+"/log"+"_"+idScriptLeader+"_"+idScriptEnemy+"/"+"state_"+id+".txt");
+            		Writer writer = new FileWriter("logs/logs_states_"+pathLog+"/log"+"_"+idScriptLeader+"_"+idScriptEnemy+"/"+"state_"+id+".txt");
             		gs.toJSON(writer); //salva JSon contendo todo o estado no tempo x que escolhido
             		writer.flush();
             		writer.close();

@@ -2,7 +2,7 @@ package sampling;
 
 import java.io.File;
 
-public class RunTest {
+public class RunSampling {
 	
 	static DataRecollection dataRecollection;
 	

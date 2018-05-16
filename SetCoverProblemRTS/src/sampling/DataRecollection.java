@@ -93,7 +93,7 @@ public class DataRecollection {
 				
 				PlayerAction pa= game.generateActionbyScript(gsSimulator, j);
                 try {
-                	Writer writer = new FileWriter("samplings/"+folderLeader+"_idLogs_"+pathLog+"_state_"+stateForSampling+".txt",true);
+                	Writer writer = new FileWriter("samplings/"+folderLeader+"_state_"+stateForSampling+"_idLogs_"+pathLog+".txt",true);
 					writer.write(pa.getActions().toString());
 					writer.write("\n");
 					writer.flush();

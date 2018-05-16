@@ -116,12 +116,10 @@ public class GameSampling {
         
         
         //JFrame w = PhysicalGameStatePanel.newVisualizer(gs, 640, 640, false, PhysicalGameStatePanel.COLORSCHEME_BLACK);;
-        
-        File[] files = new File("logs_states").listFiles();
-        int idSampling=files.length;
+
         //File dir = new File("logs_states/log_"+idScriptLeader+"_"+idScriptEnemy+"_"+idSampling);
-        File dir = new File("logs_states/log_"+idScriptLeader+"_"+idScriptEnemy);
-        dir.mkdir();
+        File dir = new File("logs/logs_states_"+pathLog+"/log_"+idScriptLeader+"_"+idScriptEnemy);
+        dir.mkdirs();
         int id=0;
         
         long nextTimeToUpdate = System.currentTimeMillis() + PERIOD;

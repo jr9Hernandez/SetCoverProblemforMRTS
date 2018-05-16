@@ -8,7 +8,7 @@ public class RunSampling {
 	
 	public static void main(String[] args) {
 		
-		String pathLog = args[1];
+		String pathLog = args[0];
 		//Here we collect the data
 		dataRecollection=new DataRecollection(pathLog);
 		dataRecollection.dataRecollection();
@@ -16,7 +16,7 @@ public class RunSampling {
 		
 		//Here we sample
 		
-		File[] files = new File("logs_states").listFiles();
+		File[] files = new File("logs_states"+pathLog).listFiles();
 	    sampling(files);
 	    
 	    System.out.println("Fim");

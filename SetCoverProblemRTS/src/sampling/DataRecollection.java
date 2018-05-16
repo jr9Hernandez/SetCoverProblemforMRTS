@@ -77,7 +77,7 @@ public class DataRecollection {
 		{
 		
 			try {
-				statesforSampling.add(readFile("logs_states"+pathLog+"/"+folderLeader+"/"+"state_"+stateForSampling+".txt"));
+				statesforSampling.add(readFile("logs_states_"+pathLog+"/"+folderLeader+"/"+"state_"+stateForSampling+".txt"));
 				stateForSampling=stateForSampling+(numFiles/numberStatesSampled);
 				//File dir = new File("samplings/"+folderLeader+"/"+"state_"+stateForSampling);
 			    //dir.mkdirs();

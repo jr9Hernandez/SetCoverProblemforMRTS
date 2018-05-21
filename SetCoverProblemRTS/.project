@@ -3,6 +3,7 @@
 	<name>SetCoverProblemRTS</name>
 	<comment></comment>
 	<projects>
+		<project>MicroRTS</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

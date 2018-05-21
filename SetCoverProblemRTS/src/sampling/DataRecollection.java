@@ -5,7 +5,6 @@
  */
 package sampling;
 
-import ai.asymmetric.GAB.PGSLimitScriptC;
 import ai.configurablescript.BasicExpandedConfigurableScript;
 import ai.configurablescript.ScriptsCreator;
 import ai.core.AI;
@@ -65,6 +64,51 @@ public class DataRecollection {
 		}
 
 	}
+
+	public void samplingByFiles(String folderLeader, File[] Files)
+	{
+		Random rand = new Random();
+		int numberStatesSampled=ConfigurationsSC.NUM_STATES_SAM;
+		int stateForSampling=0;
+		
+		ArrayList<String> statesforSampling = new ArrayList<>();
+		for (int i=0;i<numberStatesSampled;i++)
+		{
+		
+			try {
+				statesforSampling.add(readFile(Files[rand.nextInt(Files.length)].getPath()));
+				//stateForSampling=stateForSampling+(numFiles/numberStatesSampled);
+				//File dir = new File("samplings/"+folderLeader+"/"+"state_"+stateForSampling);
+			    //dir.mkdirs();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}			
+	        
+			for (int j = 0; j < ConfigurationsSC.TOTAL_SCRIPTS; j++) {
+				
+				
+				GameState gsSimulator = GameState.fromJSON(statesforSampling.get(i),utt);
+				
+				PlayerAction pa= game.generateActionbyScript(gsSimulator, j);
+                try {
+                	Writer writer = new FileWriter("samplings/"+folderLeader+"_state_"+stateForSampling+"_idLogs_"+pathLog+".txt",true);
+					writer.write(pa.getActions().toString());
+					writer.write("\n");
+					writer.flush();
+					writer.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.gc(); // forço o garbage para tentar liberar memoria....
+				
+				
+			}
+
+		}		
+	}
+
 	
 	public void sampling(String folderLeader, int numFiles)
 	{

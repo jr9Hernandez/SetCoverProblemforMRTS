@@ -6,9 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -63,7 +61,7 @@ public class Data {
 	{
 		sets=new ArrayList<List<String>>();
 
-		List<String> scripts;
+		//List<String> scripts;
 		
 	    for(int i=0;i<files.length;i++)
 	    {
@@ -107,7 +105,7 @@ public class Data {
 	
 	public void printDataList(List<List<String>> data)
 	{
-		int counter=0;
+		//int counter=0;
 		for (List<String> e: data) {
 		    System.out.println(e);
 			//System.out.println(counter++);

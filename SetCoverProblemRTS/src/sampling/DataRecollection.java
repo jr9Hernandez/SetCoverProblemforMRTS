@@ -76,8 +76,8 @@ public class DataRecollection {
 		{
 		
 			try {
-				statesforSampling.add(readFile(Files[rand.nextInt(Files.length)].getPath()));
-				//stateForSampling=stateForSampling+(numFiles/numberStatesSampled);
+				stateForSampling=rand.nextInt(Files.length);
+				statesforSampling.add(readFile(Files[stateForSampling].getPath()));	
 				//File dir = new File("samplings/"+folderLeader+"/"+"state_"+stateForSampling);
 			    //dir.mkdirs();
 			} catch (IOException e1) {

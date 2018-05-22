@@ -2,9 +2,9 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="/home/rubens/MicroRTS/lib/jdom.jar"/>
-	<classpathentry kind="lib" path="/home/rubens/MicroRTS/lib/minimal-json-0.9.4.jar"/>
-	<classpathentry kind="lib" path="/home/rubens/MicroRTS/lib/weka.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/MicroRTS"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/MicroRTS2"/>
+	<classpathentry kind="lib" path="/mrtsWG/lib/jdom.jar"/>
+	<classpathentry kind="lib" path="/mrtsWG/lib/minimal-json-0.9.4.jar"/>
+	<classpathentry kind="lib" path="/mrtsWG/lib/weka.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

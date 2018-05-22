@@ -5,26 +5,72 @@
 package sampling;
 
 import ai.asymmetric.PGS.*;
+import tests.*;
+import PVAI.EconomyRush;
+import PVAI.EconomyRushBurster;
+import PVAI.WorkerDefense;
+import PVAI.RangedDefense;
+import Standard.CombinedEvaluation;
+import Standard.StrategyTactics;
 import ai.core.AI;
+import ai.*;
+import ai.abstraction.HeavyRush;
+import ai.abstraction.LightRush;
+import ai.abstraction.RangedRush;
+import ai.abstraction.WorkerRush;
+import ai.abstraction.partialobservability.POLightRush;
+import ai.abstraction.partialobservability.PORangedRush;
+import ai.abstraction.pathfinding.AStarPathFinding;
+import ai.abstraction.pathfinding.BFSPathFinding;
+import ai.aiSelection.AlphaBetaSearch.AlphaBetaSearch;
+import ai.asymmetric.GAB.GAB_oldVersion;
+import ai.asymmetric.GAB.SandBox.AlphaBetaSearchAbstract;
+import ai.asymmetric.GAB.SandBox.GAB;
+import ai.asymmetric.GAB.SandBox.GAB_SandBox_Parcial_State;
+import ai.asymmetric.PGS.SandBox.PGSmRTS_SandBox;
+import ai.asymmetric.SAB.SAB;
+import ai.asymmetric.SSS.SSSmRTSScriptChoice;
 import ai.configurablescript.BasicExpandedConfigurableScript;
 import ai.configurablescript.ScriptsCreator;
+import ai.evaluation.EvaluationFunctionForwarding;
+import ai.evaluation.LanchesterEvaluationFunction;
+import ai.evaluation.SimpleSqrtEvaluationFunction3;
+import ai.mcts.naivemcts.NaiveMCTS;
+import ai.minimax.ABCD.IDABCD;
+import ai.portfolio.PortfolioAI;
+import ai.puppet.PuppetSearchMCTS;
+import gui.PhysicalGameStatePanel;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import javax.swing.JFrame;
+
+import org.jdom.JDOMException;
+
 import rts.GameState;
 import rts.PhysicalGameState;
+import rts.Player;
 import rts.PlayerAction;
-import rts.UnitAction;
 import rts.units.Unit;
 import rts.units.UnitTypeTable;
-import util.Pair;
+import static tests.ClusterTesteLeve.decodeScripts;
+import util.XMLWriter;
 
-
-public class GameSampling {
+/**
+ *
+ * @author santi
+ */
+public class GameSampling_old {
 
     static String _nameStrategies = "", _enemy = "";
     static AI[] strategies = null;
@@ -32,22 +78,17 @@ public class GameSampling {
     PhysicalGameState pgs;
     int MAXCYCLES;
     int PERIOD;
-    static File prod;
-    static File move ;
-    static File attack;
-    static File other;
-    static int id;
     
-    public GameSampling()
+    public GameSampling_old()
     {
     	utt = new UnitTypeTable();
-        MAXCYCLES = 8000;
+        MAXCYCLES = 5000;
         PERIOD = 20;
 
     }
 
     public void run(int idScriptLeader, int idScriptEnemy, String pathLog) throws Exception {
-    	id = 0;
+    	
     	//controle de tempo
         Instant timeInicial = Instant.now();
         Duration duracao;
@@ -79,9 +120,7 @@ public class GameSampling {
         //File dir = new File("logs_states/log_"+idScriptLeader+"_"+idScriptEnemy+"_"+idSampling);
         File dir = new File("logs/logs_states_"+pathLog+"/log_"+idScriptLeader+"_"+idScriptEnemy);
         dir.mkdirs();
-        //create subdiretories 
-        createSubDirs(dir);
-        
+        int id=0;
         
         long nextTimeToUpdate = System.currentTimeMillis() + PERIOD;
         
@@ -90,7 +129,7 @@ public class GameSampling {
             	
             	//File subDir = new File("logs_states/log_"+sampleCounter+"_"+idScriptLeader+"_"+idScriptEnemy+"/"+"state_"+gs.getTime());
             	//subDir.mkdir();
-                /*
+                
             	if (gs.canExecuteAnyAction(0) ) {
                 //alcançamos o estado que desejamos salvar....
         
@@ -100,7 +139,7 @@ public class GameSampling {
             		writer.close();
             		id++;
             	}
-                */
+                
                 PlayerAction pa1 = ai1.getAction(0, gs);  
                 //System.out.println("Tempo de execução P1="+(startTime = System.currentTimeMillis() - startTime));
                 //System.out.println("Action A1 ="+ pa1.toString());
@@ -108,11 +147,6 @@ public class GameSampling {
                 PlayerAction pa2 = ai2.getAction(1, gs);
                 //System.out.println("Tempo de execução P2="+(startTime = System.currentTimeMillis() - startTime));
                 //System.out.println("Action A2 ="+ pa2.toString());
-                
-                if (gs.canExecuteAnyAction(0) ) {
-                	//verify what kind of action is and save the state in your specified folder
-                	saveStateByType(gs, pa1);
-                }
                 
                 gs.issueSafe(pa1);
                 gs.issueSafe(pa2);
@@ -145,90 +179,6 @@ public class GameSampling {
         } while (!gameover && (gs.getTime() < MAXCYCLES) && (duracao.toMinutes() < 15));
 
         System.out.println("Game Over");
-    }
-    /**
-     * This function will save the state by type, using the PlayerAction to define what kind of state is it.
-     * @param gs_save
-     * @param pAction
-     * @throws Exception 
-     */
-    public static void saveStateByType(GameState gs_save, PlayerAction pAction) throws Exception{
-    	int typeState = getTypePlayerAction(pAction);
-    	if(typeState == 4){
-    		return;
-    	}
-    	Writer writer;
-    	
-    	if(typeState == 0){
-    		writer = new FileWriter(prod.getAbsolutePath()+"/"+"state_"+id+".txt");
-    		gs_save.toJSON(writer); 
-    	}else if(typeState == 1){
-    		writer = new FileWriter(move.getAbsolutePath()+"/"+"state_"+id+".txt");
-    		gs_save.toJSON(writer); 
-    	} else if(typeState == 2){
-    		writer = new FileWriter(attack.getAbsolutePath()+"/"+"state_"+id+".txt");
-    		gs_save.toJSON(writer); 
-    	}else{
-    		writer = new FileWriter(other.getAbsolutePath()+"/"+"state_"+id+".txt");
-    		gs_save.toJSON(writer); 
-    	}
-    	
-    	writer.flush();
-		writer.close();
-		id++;
-    }
-    /**
-     * Classify what type of action was sent with parameter
-     * @param pAction
-     * @return 0=produce, 1=move, 2= attack, 3 =other and 4 for wait (playerAction Just with wait). 
-     */
-    public static int getTypePlayerAction(PlayerAction pAction){
-    	int totalActions = pAction.getActions().size();
-    	int cont = 0;
-    	for (Pair<Unit, UnitAction> act : pAction.getActions()) {
-    		if(act.m_b.getType() == UnitAction.TYPE_NONE){
-    			cont++;
-    		}
-    	}
-    	if(cont==totalActions){
-    		return 4;
-    	}
-    	
-    	boolean hasAttack = false;
-    	boolean hasMove = false;
-    	for (Pair<Unit, UnitAction> act : pAction.getActions()) {
-			if(act.m_b.getType() == UnitAction.TYPE_PRODUCE){
-				return 0;
-			}else if(act.m_b.getType() == UnitAction.TYPE_ATTACK_LOCATION){
-				hasAttack=true;
-			}else if(act.m_b.getType() == UnitAction.TYPE_MOVE){
-				hasMove=true;
-			}
-		}
-    	if(hasAttack){
-    		return 2;
-    	}
-    	if(hasMove){
-    		return 1;
-    	}
-    	
-    	return 3;
-    }
-    
-    public static void createSubDirs(File parent){
-    	String path = parent.getAbsolutePath();
-    	//create produce diretory
-    	prod = new File(path+"/produce");
-    	prod.mkdirs();
-    	//create move diretory
-    	move = new File(path+"/move");
-    	move.mkdirs();
-    	//create Attack diretory
-    	attack = new File(path+"/attack");
-    	attack.mkdirs();
-    	//create other diretory
-    	other = new File(path+"/other");
-    	other.mkdirs();
     }
     
     public PlayerAction generateActionbyScript(GameState g, int scriptSampling) 

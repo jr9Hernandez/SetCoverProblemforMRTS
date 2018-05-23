@@ -88,7 +88,7 @@ public class DataRecollection {
 			for (int j = 0; j < ConfigurationsSC.TOTAL_SCRIPTS; j++) {
 				
 				
-				GameState gsSimulator = GameState.fromJSON(statesforSampling.get(i),utt);
+				GameState gsSimulator = GameState.fromJSON(statesforSampling.get(i),game.utt);
 				
 				PlayerAction pa= game.generateActionbyScript(gsSimulator, j);
                 try {
@@ -133,7 +133,7 @@ public class DataRecollection {
 			for (int j = 0; j < ConfigurationsSC.TOTAL_SCRIPTS; j++) {
 				
 				
-				GameState gsSimulator = GameState.fromJSON(statesforSampling.get(i),utt);
+				GameState gsSimulator = GameState.fromJSON(statesforSampling.get(i),game.utt);
 				
 				PlayerAction pa= game.generateActionbyScript(gsSimulator, j);
                 try {

@@ -17,7 +17,7 @@ public class RunSampling {
 		String pathLog = args[0];
 		//Here we collect the data
 		dataRecollection=new DataRecollection(pathLog);
-		//dataRecollection.dataRecollection();
+		dataRecollection.dataRecollection();
 		
 		
 		//Here we sample

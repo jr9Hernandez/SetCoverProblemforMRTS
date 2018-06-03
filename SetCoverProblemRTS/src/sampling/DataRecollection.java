@@ -101,11 +101,11 @@ public class DataRecollection {
 				
 				
 					gsSimulator = GameState.fromJSON(statesforSampling.get(i),game.utt);
-					System.out.println(gsSimulator.toString());
+					//System.out.println(gsSimulator.toString());
 				
 					PlayerAction pa= game.generateActionbyScript(gsSimulator, j, 0);
 					try {
-						Writer writer = new FileWriter("samplings/"+folderLeader+"_state_"+stateForSampling+"_idLogs_"+pathLog+"player_0"+".txt",true);
+						Writer writer = new FileWriter("samplings/"+folderLeader+"_state_"+stateForSampling+"_idLogs_"+pathLog+"_player_0"+".txt",true);
 						writer.write(pa.getActions().toString());
 						writer.write("\n");
 						writer.flush();
@@ -125,11 +125,11 @@ public class DataRecollection {
 				
 				
 					gsSimulator = GameState.fromJSON(statesforSampling.get(i),game.utt);
-					System.out.println(gsSimulator.toString());
+					//System.out.println(gsSimulator.toString());
 				
 					PlayerAction pa= game.generateActionbyScript(gsSimulator, j, 1);
 					try {
-						Writer writer = new FileWriter("samplings/"+folderLeader+"_state_"+stateForSampling+"_idLogs_"+pathLog+"player_1"+".txt",true);
+						Writer writer = new FileWriter("samplings/"+folderLeader+"_state_"+stateForSampling+"_idLogs_"+pathLog+"_player_1"+".txt",true);
 						writer.write(pa.getActions().toString());
 						writer.write("\n");
 						writer.flush();

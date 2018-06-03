@@ -15,7 +15,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import rts.GameState;
@@ -35,6 +37,9 @@ public class DataRecollection {
 	GameSampling game;
 	UnitTypeTable utt;
 	String pathLog;
+	List<Integer> scriptsForPortfolio = new ArrayList<>();
+	String portfolioPlayer1;
+	String portfolioPlayer2;
 	
 	public DataRecollection(String pathLog) {
 		game = new GameSampling();
@@ -46,14 +51,19 @@ public class DataRecollection {
 	public void dataRecollection() {
 		for(int i=0;i<ConfigurationsSC.NUM_SAM;i++)
 		{
-			scriptEnemy = rand.nextInt(ConfigurationsSC.TOTAL_SCRIPTS);
+			//scriptEnemy = rand.nextInt(ConfigurationsSC.TOTAL_SCRIPTS);
+			scriptsForPortfolio=getPortfolioRandomSize(ConfigurationsSC.MAX_SIZE_PORTFOLIO);
+			//scriptsForPortfolio=getPortfolio();
+			portfolioPlayer2=getPortfolioInString(scriptsForPortfolio);
 			
 			for(int j=0;j<ConfigurationsSC.NUM_SCRIPTS_SAM;j++)
 			{				
-				scriptLeader = rand.nextInt(ConfigurationsSC.TOTAL_SCRIPTS);
-
+				//scriptLeader = rand.nextInt(ConfigurationsSC.TOTAL_SCRIPTS);
+				scriptsForPortfolio=getPortfolioRandomSize(ConfigurationsSC.MAX_SIZE_PORTFOLIO);
+				//scriptsForPortfolio=getPortfolio();
+				portfolioPlayer1=getPortfolioInString(scriptsForPortfolio);
 				try {						
-					game.run(scriptLeader,scriptEnemy,pathLog);
+					game.run(portfolioPlayer1,portfolioPlayer2,pathLog);
 					sampleCounter++;
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -193,6 +203,38 @@ public class DataRecollection {
 	    } finally {
 	        br.close();
 	    }
+	}
+	
+	public List <Integer> getPortfolioRandomSize(int size){
+		List<Integer> scriptsForPortfolio = new ArrayList<>();
+		
+		//gerar o novo cromossomo com base no tamanho
+		int sizePortf=rand.nextInt(size)+1;
+		for (int j = 0; j < sizePortf; j++) {
+			scriptsForPortfolio.add(rand.nextInt(ConfigurationsSC.TOTAL_SCRIPTS));
+		}
+
+		return scriptsForPortfolio;
+	}
+	
+	public List <Integer> getPortfolio(){
+		List<Integer> scriptsForPortfolio = new ArrayList<>();
+		
+		//gerar o novo cromossomo com base no tamanho
+		//int sizePortf=rand.nextInt(size)+1;
+		for (int j = 0; j < 4; j++) {
+			scriptsForPortfolio.add(rand.nextInt(ConfigurationsSC.TOTAL_SCRIPTS));
+		}
+
+		return scriptsForPortfolio;
+	}
+	
+	public String getPortfolioInString(List<Integer> scriptsForPortfolio) {
+		String portfolio="";
+		for (int id : scriptsForPortfolio) {
+			portfolio.concat(String.valueOf(id).concat(";"));
+		}
+		return portfolio;
 	}
 
 }

@@ -46,7 +46,7 @@ public class GameSampling {
 
     }
 
-    public void run(int idScriptLeader, int idScriptEnemy, String pathLog) throws Exception {
+    public void run(String portfolioPlayer1, String portfolioPlayer2, String pathLog) throws Exception {
     	id = 0;
     	//controle de tempo
         Instant timeInicial = Instant.now();
@@ -63,10 +63,12 @@ public class GameSampling {
         boolean gameover = false;
 
        
-        System.out.println("idscriptleader "+idScriptLeader);
-        System.out.println("idscripEnemy "+idScriptEnemy);
-        AI ai1 = new PGSSCriptChoice(utt, decodeScripts(utt, String.valueOf(idScriptLeader).concat(";")), "--");
-        AI ai2 = new PGSSCriptChoice(utt, decodeScripts(utt, String.valueOf(idScriptEnemy).concat(";")), "--");
+        //System.out.println("idscriptleader "+idScriptLeader);
+        //System.out.println("idscripEnemy "+idScriptEnemy);
+        AI ai1 = new PGSSCriptChoice(utt, decodeScripts(utt,portfolioPlayer1), "--");
+        AI ai2 = new PGSSCriptChoice(utt, decodeScripts(utt, portfolioPlayer2), "--");
+        //AI ai1 = new PGSSCriptChoice(utt, decodeScripts(utt, String.valueOf(idScriptLeader).concat(";")), "--");
+        //AI ai2 = new PGSSCriptChoice(utt, decodeScripts(utt, String.valueOf(idScriptEnemy).concat(";")), "--");
 
         
         System.out.println("---------AI's---------");
@@ -77,7 +79,7 @@ public class GameSampling {
         //JFrame w = PhysicalGameStatePanel.newVisualizer(gs, 640, 640, false, PhysicalGameStatePanel.COLORSCHEME_BLACK);;
 
         //File dir = new File("logs_states/log_"+idScriptLeader+"_"+idScriptEnemy+"_"+idSampling);
-        File dir = new File("logs/logs_states_"+pathLog+"/log_"+idScriptLeader+"_"+idScriptEnemy);
+        File dir = new File("logs/logs_states_"+pathLog+"/log_"+portfolioPlayer1+"_"+portfolioPlayer2);
         dir.mkdirs();
         //create subdiretories 
         createSubDirs(dir);
@@ -109,9 +111,20 @@ public class GameSampling {
                 //System.out.println("Tempo de execução P2="+(startTime = System.currentTimeMillis() - startTime));
                 //System.out.println("Action A2 ="+ pa2.toString());
                 
-                if (gs.canExecuteAnyAction(0) ) {
+                if (gs.canExecuteAnyAction(0) && gs.canExecuteAnyAction(1)) {
                 	//verify what kind of action is and save the state in your specified folder
                 	saveStateByType(gs, pa1);
+                	saveStateByType(gs, pa2);
+                }
+                else if (gs.canExecuteAnyAction(0)) {
+                	//verify what kind of action is and save the state in your specified folder
+                	saveStateByType(gs, pa1);
+                	//saveStateByType(gs, pa2);
+                }
+                else if (gs.canExecuteAnyAction(1)) {
+                	//verify what kind of action is and save the state in your specified folder
+                	//saveStateByType(gs, pa1);
+                	saveStateByType(gs, pa2);
                 }
                 
                 gs.issueSafe(pa1);

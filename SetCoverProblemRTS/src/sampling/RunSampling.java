@@ -14,7 +14,7 @@ public class RunSampling {
 	
 	public static void main(String[] args) throws IOException {
 		
-		String pathLog = args[0];
+		String pathLog = "0";
 		//Here we collect the data
 		dataRecollection=new DataRecollection(pathLog);
 		dataRecollection.dataRecollection();

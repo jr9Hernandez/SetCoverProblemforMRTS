@@ -13,6 +13,8 @@ public final class ConfigurationsSC {
 	public final static int TOTAL_SCRIPTS = 300;
 	//Max time for sampling
 	public final static int MAX_TIME_SAM = 10;
+	//portfolio's max size in pgs
+	public final static int MAX_SIZE_PORTFOLIO = 5;
 	
 	
 }

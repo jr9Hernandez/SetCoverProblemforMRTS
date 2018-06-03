@@ -244,13 +244,13 @@ public class GameSampling {
     	other.mkdirs();
     }
     
-    public PlayerAction generateActionbyScript(GameState g, int scriptSampling) 
+    public PlayerAction generateActionbyScript(GameState g, int scriptSampling, int player) 
     {
     	AI ai1 = new PGSSCriptChoice(utt, decodeScripts(utt, String.valueOf(scriptSampling).concat(";")), "--");
     	
-        PlayerAction pa1=null;
+        PlayerAction pa=null;
 		try {
-			pa1 = ai1.getAction(0, g);
+			pa = ai1.getAction(player, g);
 			//pa1.getActions().toString();
 			//System.out.println(pa1.getActions());
 			//System.out.println("Action A1 ="+ pa1.toString());
@@ -259,7 +259,7 @@ public class GameSampling {
 			e.printStackTrace();
 		}  
         
-        return pa1;
+        return pa;
     }
     
     public static List<AI> decodeScripts(UnitTypeTable utt, String sScripts) {

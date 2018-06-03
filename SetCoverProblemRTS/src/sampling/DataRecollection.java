@@ -94,26 +94,54 @@ public class DataRecollection {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}			
-	        
-			for (int j = 0; j < ConfigurationsSC.TOTAL_SCRIPTS; j++) {
+			
+			GameState gsSimulator = GameState.fromJSON(statesforSampling.get(i),game.utt);
+			if (gsSimulator.canExecuteAnyAction(0)){
+				for (int j = 0; j < ConfigurationsSC.TOTAL_SCRIPTS; j++) {
 				
 				
-				GameState gsSimulator = GameState.fromJSON(statesforSampling.get(i),game.utt);
+					gsSimulator = GameState.fromJSON(statesforSampling.get(i),game.utt);
+					System.out.println(gsSimulator.toString());
 				
-				PlayerAction pa= game.generateActionbyScript(gsSimulator, j);
-                try {
-                	Writer writer = new FileWriter("samplings/"+folderLeader+"_state_"+stateForSampling+"_idLogs_"+pathLog+".txt",true);
-					writer.write(pa.getActions().toString());
-					writer.write("\n");
-					writer.flush();
-					writer.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					PlayerAction pa= game.generateActionbyScript(gsSimulator, j, 0);
+					try {
+						Writer writer = new FileWriter("samplings/"+folderLeader+"_state_"+stateForSampling+"_idLogs_"+pathLog+"player_0"+".txt",true);
+						writer.write(pa.getActions().toString());
+						writer.write("\n");
+						writer.flush();
+						writer.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					System.gc(); // forço o garbage para tentar liberar memoria....
+				
+				
 				}
-				System.gc(); // forço o garbage para tentar liberar memoria....
+			}
+			
+			if (gsSimulator.canExecuteAnyAction(1)){
+				for (int j = 0; j < ConfigurationsSC.TOTAL_SCRIPTS; j++) {
 				
 				
+					gsSimulator = GameState.fromJSON(statesforSampling.get(i),game.utt);
+					System.out.println(gsSimulator.toString());
+				
+					PlayerAction pa= game.generateActionbyScript(gsSimulator, j, 1);
+					try {
+						Writer writer = new FileWriter("samplings/"+folderLeader+"_state_"+stateForSampling+"_idLogs_"+pathLog+"player_1"+".txt",true);
+						writer.write(pa.getActions().toString());
+						writer.write("\n");
+						writer.flush();
+						writer.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					System.gc(); // forço o garbage para tentar liberar memoria....
+				
+				
+				}
 			}
 
 		}		
@@ -145,7 +173,7 @@ public class DataRecollection {
 				
 				GameState gsSimulator = GameState.fromJSON(statesforSampling.get(i),game.utt);
 				
-				PlayerAction pa= game.generateActionbyScript(gsSimulator, j);
+				PlayerAction pa= game.generateActionbyScript(gsSimulator, j,0);
                 try {
                 	Writer writer = new FileWriter("samplings/"+folderLeader+"_state_"+stateForSampling+"_idLogs_"+pathLog+".txt",true);
 					writer.write(pa.getActions().toString());

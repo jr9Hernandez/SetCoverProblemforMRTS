@@ -232,7 +232,7 @@ public class DataRecollection {
 	public String getPortfolioInString(List<Integer> scriptsForPortfolio) {
 		String portfolio="";
 		for (int id : scriptsForPortfolio) {
-			portfolio.concat(String.valueOf(id).concat(";"));
+			portfolio=portfolio.concat(String.valueOf(id).concat(";"));
 		}
 		return portfolio;
 	}

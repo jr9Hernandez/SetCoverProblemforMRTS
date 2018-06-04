@@ -2,9 +2,9 @@ package sampling;
 
 public final class ConfigurationsSC {
 	//Total samplings
-	public final static int NUM_SAM = 9;
+	public final static int NUM_SAM = 5;
 	//Total states for sampling by Game
-	public final static int NUM_STATES_SAM = 50;
+	public final static int NUM_STATES_SAM = 40;
 	//Total leader scripts for sampling by Game
 	public final static int NUM_SCRIPTS_SAM = 1;
 	//Total samplings of scripts for the enemy

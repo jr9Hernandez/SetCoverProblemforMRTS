@@ -14,11 +14,11 @@ public class RunSetCover {
 		
 		HashMap<String, List<Integer>> data=new HashMap<String, List<Integer>>();
 		data=objData.loadDataFromSampling();
-		objData.printDataMap(data);
+		//objData.printDataMap(data);
 		//System.out.println(data.size());
 		DataFormatting sc=new DataFormatting(data);
 		sc.fillMatrix();
-		sc.printMatrix();		
+		//sc.printMatrix();		
 		
 		/*File[] files = new File("samplings").listFiles();		
 		List<List<String>> data=objData.loadDataFromSampling(files);

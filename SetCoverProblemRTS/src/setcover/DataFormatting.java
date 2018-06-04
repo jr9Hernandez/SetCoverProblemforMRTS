@@ -25,7 +25,7 @@ public class DataFormatting {
 	    //Criate list of actions
 	    for (Map.Entry<String, List<Integer>> pair : data.entrySet()) {
 	
-	        System.out.println(pair.getKey() + " = " + pair.getValue());
+	        //System.out.println(pair.getKey() + " = " + pair.getValue());
 	        idsActions[counterIds]=(String)pair.getKey();
 	        counterIds++;
 	        //System.out.println(Arrays.toString(((List<String>) pair.getValue()).toArray()));

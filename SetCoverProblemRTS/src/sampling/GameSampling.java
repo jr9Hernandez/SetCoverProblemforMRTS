@@ -114,7 +114,7 @@ public class GameSampling {
                 if (gs.canExecuteAnyAction(0) && gs.canExecuteAnyAction(1)) {
                 	//verify what kind of action is and save the state in your specified folder
                 	saveStateByType(gs, pa1);
-                	saveStateByType(gs, pa2);
+                	//saveStateByType(gs, pa2);
                 }
                 else if (gs.canExecuteAnyAction(0)) {
                 	//verify what kind of action is and save the state in your specified folder

@@ -52,15 +52,15 @@ public class DataRecollection {
 		for(int i=0;i<ConfigurationsSC.NUM_SAM;i++)
 		{
 			//scriptEnemy = rand.nextInt(ConfigurationsSC.TOTAL_SCRIPTS);
-			scriptsForPortfolio=getPortfolioRandomSize(ConfigurationsSC.MAX_SIZE_PORTFOLIO);
-			//scriptsForPortfolio=getPortfolio();
+			//scriptsForPortfolio=getPortfolioRandomSize(ConfigurationsSC.MAX_SIZE_PORTFOLIO);
+			scriptsForPortfolio=getPortfolio();
 			portfolioPlayer2=getPortfolioInString(scriptsForPortfolio);
 			
 			for(int j=0;j<ConfigurationsSC.NUM_SCRIPTS_SAM;j++)
 			{				
 				//scriptLeader = rand.nextInt(ConfigurationsSC.TOTAL_SCRIPTS);
-				scriptsForPortfolio=getPortfolioRandomSize(ConfigurationsSC.MAX_SIZE_PORTFOLIO);
-				//scriptsForPortfolio=getPortfolio();
+				//scriptsForPortfolio=getPortfolioRandomSize(ConfigurationsSC.MAX_SIZE_PORTFOLIO);
+				scriptsForPortfolio=getPortfolio();
 				portfolioPlayer1=getPortfolioInString(scriptsForPortfolio);
 				try {						
 					game.run(portfolioPlayer1,portfolioPlayer2,pathLog);

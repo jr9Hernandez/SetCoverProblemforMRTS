@@ -14,7 +14,7 @@ public final class ConfigurationsSC {
 	//Max time for sampling
 	public final static int MAX_TIME_SAM = 10;
 	//portfolio's max size in pgs
-	public final static int MAX_SIZE_PORTFOLIO = 5;
+	public final static int MAX_SIZE_PORTFOLIO = 10;
 	
 	
 }

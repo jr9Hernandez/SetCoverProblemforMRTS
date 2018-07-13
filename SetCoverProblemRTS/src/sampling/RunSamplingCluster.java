@@ -39,7 +39,7 @@ public class RunSamplingCluster {
 			for(File direc : file.listFiles()){
 				if(direc.isDirectory()){
 					//sampling 50% of data for parent. 
-					copyFilesForParent(50, file, direc);
+					copyFilesForParent(100, file, direc);
 				}
 			}
 		}

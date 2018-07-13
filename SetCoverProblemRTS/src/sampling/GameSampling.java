@@ -65,8 +65,10 @@ public class GameSampling {
        
         //System.out.println("idscriptleader "+idScriptLeader);
         //System.out.println("idscripEnemy "+idScriptEnemy);
-        AI ai1 = new PGSSCriptChoice(utt, decodeScripts(utt,portfolioPlayer1), "--");
-        AI ai2 = new PGSSCriptChoice(utt, decodeScripts(utt, portfolioPlayer2), "--");
+        //AI ai1 = new PGSSCriptChoice(utt, decodeScripts(utt,portfolioPlayer1), "--");
+        //AI ai2 = new PGSSCriptChoice(utt, decodeScripts(utt, portfolioPlayer2), "--");
+        AI ai1= new PGSSCriptChoiceRandom(utt, decodeScripts(utt, portfolioPlayer1), "PGSR", 2, 200);
+        AI ai2= new PGSSCriptChoiceRandom(utt, decodeScripts(utt, portfolioPlayer2), "PGSR", 2, 200);
         //AI ai1 = new PGSSCriptChoice(utt, decodeScripts(utt, String.valueOf(idScriptLeader).concat(";")), "--");
         //AI ai2 = new PGSSCriptChoice(utt, decodeScripts(utt, String.valueOf(idScriptEnemy).concat(";")), "--");
 
